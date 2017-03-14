@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>红包小测试</title>
+	<meta charset="utf-8">
+</head>
+<style type="text/css">
+	*{margin:0;padding:0;}
+	#fa{width:640px;height:100px;margin:20px auto;font-family:'楷体';font-size:36px;font-weight:bolder;color:red;border:3px solid red;line-height:100px;padding-left:30px;background:yellow;-moz-border-radius: 40px;-khtml-border-radius: 40px;-webkit-border-radius: 40px;border-radius: 40px;}
+	#fa input{height:30px;width:100px;border:0px;background:yellow;}
+	#fa button{width:100px;height:50px;line-height:50px;color:#fff;background:red;font-weight:bolder;font-family:'楷体';border:0px;font-size:24px;-moz-border-radius: 20px;-khtml-border-radius: 20px;-webkit-border-radius: 20px;border-radius: 20px;}
+	table{width:640px;margin:10px auto;display:none;}
+	table td{width:320px;}
+	#bao{width:304px;height:500px;background:red;position:relative;-moz-border-radius: 40px;-khtml-border-radius: 40px;-webkit-border-radius: 40px;border-radius: 40px;}
+	#bao2{width:300px;height:150px;border:4px solid #fff;-moz-border-bottom-right-radius: 300px;-khtml-border-bottom-right-radius: 300px;-webkit-border-bottom-right-radius: 300px;border-bottom-right-radius: 300px;-moz-border-bottom-left-radius: 300px;-khtml-border-bottom-left-radius: 300px;-webkit-border-bottom-left-radius: 300px;border-bottom-left-radius: 300px;}
+	#kai{width:80px;height:80px;background:yellow;font-size:80px;font-weight:bolder;font-family:'楷体';color:#fff;line-height:80px;position:absolute;left:110px;top:250px;-moz-border-radius: 40px;-khtml-border-radius: 40px;-webkit-border-radius: 40px;border-radius: 40px;}
+	table ul li{color:red;font-size:24px;}
+</style>
+<body>
+<div id="fa">
+	金额：<input id="money" type="text" value="">
+	个数：<input id="num" type="text" value="">
+	<button id="fabao">发红包</button>
+</div>
+<table id="table">
+	<tr>
+		<td>
+			<ul id="box">
+			</ul>
+		</td>
+		<td>
+			<div id="bao"><div id="bao2"></div><div id="kai">开</div></div>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">
+	var fabao = document.getElementById('fabao');
+	var fa = document.getElementById('fa');
+	var table = document.getElementById('table');
+	function GetRandomNum(Min,Max){
+		var Range = Max - Min;
+		var Rand = Math.random();
+		return(Min+Math.round(Rand*Range));
+	}
+	var omask = document.getElementById('box');
+	
+	function bao(money,num){
+		min = 0.01;
+    	for(var i=1;i<num;i++){
+    		var safe_money=(money-(num-i)*min)/(num-i);//随机安全上限    
+	    	var moneys=GetRandomNum(1,safe_money*100)/100;    
+	    	money=money-moneys; 
+	    	str = '第'+i+'个红包：'+moneys+' 元;';
+	    	var ospan = document.createElement('li');
+			omask.appendChild(ospan);
+			ospan.innerHTML = str;
+			ospan.style.display = "none";
+    	}
+    	str = '第'+num+'个红包：'+money+' 元;';
+    	var ospan = document.createElement('li');
+		omask.appendChild(ospan);
+		ospan.innerHTML = str;
+		ospan.style.display = "none";
+	}
+	fabao.onclick = function(){
+		money = document.getElementById('money').value;
+		num = document.getElementById('num').value;
+		fa.style.display = "none";
+		table.style.display = "block";
+		bao(money,num);
+	}
+	j=0;
+	document.getElementById('kai').onclick = function(){
+		if(j>num-1){
+			fa.style.display = "block";
+			table.style.display = "none";
+			omask.innerHTML = '';
+			j=0;
+    	}
+		omask.getElementsByTagName('li')[j].style.display = "block";
+    	j++;
+	}
+
+</script>
+</body>
+</html>
