@@ -56,7 +56,7 @@
 			ospan.innerHTML = str;
 			ospan.style.display = "none";
     	}
-    	str = '第'+num+'个红包：'+money+' 元;';
+    	str = '第'+num+'个红包：'+money.toFixed(2)+' 元;';
     	var ospan = document.createElement('li');
 		omask.appendChild(ospan);
 		ospan.innerHTML = str;
